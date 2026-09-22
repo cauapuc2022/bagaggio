@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pedido Sugestão | Bagaggio</title>
+
+    <!-- =========================================================
+         ESTILOS DO SITE
+         Edite cores, tamanhos e espaçamentos nesta seção.
+         ========================================================= -->
+    <style>
+* {
+    box-sizing:border-box}
+
+body {
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f6f7f7;
+    color:#17201e}
+
+.top {
+    background:#fff;
+    border-bottom:1px solid #e5e7e7;
+    position:sticky;
+    top:0;
+    z-index:20}
+
+.topin {
+    max-width:1200px;
+    margin:auto;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    gap:16px}
+
+.logo. {
+    width:76px;
+    height:76px;
+    object-fit:cover;
+    border-radius:12px}
+
+.divider {
+    width:1px;
+    height:54px;
+    background:#ddd}
+
+.logo.bag {
+    width:150px;
+    height:76px;
+    object-fit:cover;
+    border-radius:10px}
+
+.stats {
+    margin-left:auto;
+    display:flex;
+    gap:42px}
+
+.stat small {
+    display:block;
+    font-size:11px;
+    letter-spacing:1px;
+    color:#65716e}
+
+.stat b {
+    font-size:26px;
+    color:#005747}
+
+.hero {
+    max-width:1200px;
+    margin:0 auto;
+    padding:26px 22px 18px}
+
+.hero h1 {
+    font-size:25px;
+    margin:0 0 7px}
+
+.hero p {
+    margin:0;
+    color:#66716f;
+    line-height:1.5}
+
+.badge {
+    display:inline-block;
+    margin-top:14px;
+    background:#e6f2ef;
+    color:#005747;
+    padding:9px 13px;
+    border-radius:20px;
+    font-weight:700;
+    font-size:13px}
+
+.grid {
+    max-width:1200px;
+    margin:auto;
+    padding:10px 22px 140px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px}
+
+.card {
+    background:white;
+    border:1px solid #e1e5e4;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,.045);
+    position:relative}
+
+.remove {
+    position:absolute;
+    right:12px;
+    top:12px;
+    border:0;
+    background:#fff;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    font-size:20px;
+    color:#75807e;
+    box-shadow:0 2px 10px #0002;
+    cursor:pointer;
+    z-index:2}
+
+.photo {
+    height:360px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff}
+
+.photo img {
+    width:100%;
+    height:100%;
+    object-fit:contain}
+
+.info {
+    padding:0 18px 18px}
+
+.sku {
+    font-size:11px;
+    color:#7a8583;
+    letter-spacing:.5px}
+
+.name {
+    font-size:15px;
+    font-weight:800;
+    min-height:40px;
+    margin:7px 0 14px;
+    line-height:1.3}
+
+.prices {
+    border-top:1px solid #e8eaea;
+    padding-top:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:end}
+
+.label {
+    font-size:11px;
+    color:#7a8583}
+
+.original {
+    text-decoration:line-through;
+    color:#6d7775;
+    font-size:14px;
+    margin-top:4px}
+
+.bagprice {
+    font-size:22px;
+    color:#005747;
+    font-weight:900;
+    margin-top:3px}
+
+.off {
+    font-size:10px;
+    color:#d51f36;
+    font-weight:800}
+
+.controls {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px solid #eee}
+
+.qtybox {
+    display:flex;
+    align-items:center;
+    border:1px solid #d8dddc;
+    border-radius:10px;
+    overflow:hidden}
+
+.qtybox button {
+    border:0;
+    background:#f3f5f4;
+    width:36px;
+    height:36px;
+    font-size:20px;
+    cursor:pointer}
+
+.qtybox input {
+    width:48px;
+    height:36px;
+    border:0;
+    text-align:center;
+    font-weight:800;
+    font-size:15px;
+    outline:none}
+
+.subtotal {
+    text-align:right}
+
+.subtotal b {
+    display:block;
+    color:#005747;
+    font-size:18px;
+    margin-top:3px}
+
+.bottom {
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#fff;
+    border-top:1px solid #ddd;
+    z-index:30}
+
+.bottomin {
+    max-width:1200px;
+    margin:auto;
+    padding:15px 22px;
+    display:flex;
+    align-items:center;
+    gap:20px}
+
+.grand small {
+    color:#6c7775}
+
+.grand b {
+    display:block;
+    font-size:26px;
+    color:#005747}
+
+.download {
+    margin-left:auto;
+    border:0;
+    background:#005747;
+    color:#fff;
+    font-weight:900;
+    padding:17px 24px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:14px}
+
+.download:hover {
+    background:#00483c}
+
+.empty {
+    text-align:center;
+    grid-column:1/-1;
+    padding:80px 20px;
+    color:#667}
+
+.note {
+    font-size:11px;
+    color:#777;
+    margin-top:4px}
+
+@media(max-width:900px) {
+    .grid {
+    grid-template-columns:repeat(2,1fr)}
+
+.stats {
+    gap:16px}
+
+.photo {
+    height:300px}
+}
+
+@media(max-width:620px) {
+    .topin {
+    padding:10px 12px}
+
+.logo. {
+    width:54px;
+    height:54px}
+
+.logo.bag {
+    width:105px;
+    height:54px}
+
+.divider {
+    height:40px}
+
+.stats {
+    margin-left:auto}
+
+.stat:first-child {
+    display:none}
+
+.stat b {
+    font-size:19px}
+
+.hero {
+    padding:18px 14px}
+
+.grid {
+    grid-template-columns:1fr;
+    padding:8px 14px 145px}
+
+.photo {
+    height:380px}
+
+.bottomin {
+    padding:10px 14px}
+
+.grand b {
+    font-size:20px}
+
+.download {
+    padding:14px 12px;
+    font-size:11px;
+    max-width:55%}
+}
+
+
+    </style>
+</head>
+
+<body>
+    <!-- =========================================================
+         ESTRUTURA VISUAL
+         Cabeçalho, apresentação, grade de produtos e rodapé.
+         ========================================================= -->
+     <header class="top">
+      <div class="topin">
+       
+       <div class="divider">
+       </div>
+       <img class="logo bag" src="imagens/imagem_01.png"/>
+       <div class="stats">
+        <div class="stat">
+         <small>
+          ITENS SELECIONADOS
+         </small>
+         <b id="items">
+          0
+         </b>
+        </div>
+        <div class="stat">
+         <small>
+          VALOR DO PEDIDO
+         </small>
+         <b id="topTotal">
+          R$ 0,00
+         </b>
+        </div>
+       </div>
+      </div>
+     </header>
+     <section class="hero">
+      <h1>
+       Pedido sugestão Bagaggio
+      </h1>
+      
+      <span class="badge">
+       Condição Bagaggio: 15% de desconto sobre o valor original
+      </span>
+     </section>
+     <main class="grid" id="grid">
+     </main>
+     <footer class="bottom">
+      <div class="bottomin">
+       <div class="grand">
+        <small>
+         Total com condição Bagaggio
+        </small>
+        <b id="grand">
+         R$ 0,00
+        </b>
+        <div class="note">
+         Valores calculados pelas quantidades selecionadas
+        </div>
+       </div>
+       <button class="download" onclick="downloadExcel()">
+        FAZER DOWNLOAD PARA ENVIAR AO REPRESENTANTE
+       </button>
+      </div>
+     </footer>
+
+    <!-- =========================================================
+         DADOS DOS PRODUTOS E FUNCIONALIDADES
+         Para alterar nome, SKU, preço ou quantidade inicial,
+         procure o produto abaixo e edite os respectivos campos.
+         price = valor original | qty = quantidade sugerida
+         O desconto de 15% é calculado pela função discounted().
+         ========================================================= -->
+    <script>
+const products = [
+    {"name": "MOCHILA ESPORTIVA FLAMENGO 27C", "sku": "0239550458001", "price": 194.39, "qty": 0, "unit": "UND", "img": "imagens/imagem_02.png"}, {"name": "MOCHILA CASUAL FLAMENGO 27C", "sku": "0239544458001", "price": 164.95, "qty": 0, "unit": "UND", "img": "imagens/imagem_03.png"}, {"name": "MOCHILA FLAMENGO WAVES 27C", "sku": "0239551458001", "price": 149.95, "qty": 0, "unit": "UND", "img": "imagens/imagem_04.png"}, {"name": "KIT MOCHILA C/ 2 RODAS FLAMENGO 27KP0 / LANCHEIRA / ESTOJO", "sku": "9990228651001", "price": 159.4, "qty": 0, "unit": "KITS", "img": "imagens/imagem_05.png"}, {"name": "BOLSA DE VIAGEM ESPORTIVA FLAMENGO 27C", "sku": "0048847458001", "price": 139.5, "qty": 0, "unit": "UND", "img": "imagens/imagem_06.png"}, {"name": "SHOULDER ESPORTIVA FLAMENGO 27C", "sku": "0239553458001", "price": 55.5, "qty": 0, "unit": "UND", "img": "imagens/imagem_07.png"}, {"name": "NECESSAIRE FLAMENGO WAVES 27C", "sku": "0146529458001", "price": 79.95, "qty": 0, "unit": "UND", "img": "imagens/imagem_08.png"},
+    {"name":"MALA DE BORDO FLAMENGO CRF - TAMANHO P","sku":"0018697664003","price":277.72,"qty":0,"unit":"UND","img":"imagens/imagem_09.png"},
+    {"name":"NECESSAIRE FLAMENGO 26T VENCER","sku":"0146502458001","price":49.95,"qty":0,"unit":"UND","img":"imagens/imagem_10.png"},
+    {"name":"MOCHILA VASCO CASUAL 27","sku":"0239548458001","price":124.95,"qty":0,"unit":"UND","img":"imagens/imagem_11.jpg"},
+    {"name":"KIT MOCHILA C/ 2 RODAS BOTAFOGO 27KP0 / LANCHEIRA / ESTOJO","sku":"9990232458001","price":154.85,"qty":0,"unit":"UND","img":"imagens/imagem_12.jpg"},
+    {"name":"NECESSAIRE BOTAFOGO 27C","sku":"0146530458001","price":49.95,"qty":0,"unit":"UND","img":"imagens/imagem_13.jpg"},
+    {"name":"MALA DE VIAGEM BOTAFOGO DE BORDO II 10KG","sku":"0018849482003","price":227.0,"qty":0,"unit":"UND","img":"imagens/imagem_14.jpg"},
+    {"name":"ESTAMPA FLAMENGO CLASSIC II PEQ","sku":"0019131518003","price":227.0,"qty":0,"unit":"UND","img":"imagens/imagem_15.jpg"},
+    {"name":"KIT MOCHILA C/ 2 RODAS FLAMENGO 27P / LANCH","sku":"9990222458001","price":309.4,"qty":0,"unit":"UND","img":"imagens/imagem_16.jpg"},
+    {"name":"LANCHEIRA FLAMENGO 27C","sku":"0159396458001","price":89.95,"qty":0,"unit":"UND","img":"imagens/imagem_17.jpg"},
+    {"name":"MOCHILA ESPORTIVA FLAMENGO - 20 LITROS","sku":"0226102651001","price":99.95,"qty":0,"unit":"UND","img":"imagens/imagem_18.jpg"},
+    {"name":"MOCHILA TERMICA FLAMENGO 27C","sku":"0239552458001","price":179.95,"qty":0,"unit":"UND","img":"imagens/imagem_19.jpg"},
+    {"name":"NECESSAIRE ESPORTIVA FLAMENGO 27C","sku":"0146528458001","price":64.95,"qty":0,"unit":"UND","img":"imagens/imagem_20.jpg"},
+    {"name":"MOCHILA CASUAL FLUMINENSE","sku":"0226761624001","price":164.95,"qty":0,"unit":"UND","img":"imagens/imagem_21.jpg"},
+    {"name":"NECESSAIRE EXECUTIVA FLUMINENSE","sku":"0146519458001","price":94.95,"qty":0,"unit":"UND","img":"imagens/imagem_22.jpg"},
+    {"name":"NECESSAIRE FLUMINENSE 27C","sku":"0146532626001","price":49.95,"qty":0,"unit":"UND","img":"imagens/imagem_23.jpg"},
+    {"name":"KIT MOCHILA C/ 2 RODAS VASCO 27KP0 / LANCHE","sku":"9990233458001","price":154.85,"qty":0,"unit":"UND","img":"imagens/imagem_24.jpg"},
+    {"name":"MALA DE BORDO VASCO","sku":"0019000458003","price":227.0,"qty":0,"unit":"UND","img":"imagens/imagem_25.jpg"},
+    {"name":"MOCHILA CASUAL VASCO","sku":"0280844458001","price":164.95,"qty":0,"unit":"UND","img":"imagens/imagem_26.jpg"},
+    {"name":"MOCHILA EXECUTIVA VASCO","sku":"0280845458001","price":99.95,"qty":0,"unit":"UND","img":"imagens/imagem_27.jpg"},
+    {"name":"NECESSAIRE VASCO 27C","sku":"0146531458001","price":49.95,"qty":0,"unit":"UND","img":"imagens/imagem_28.jpg"},
+    {"name":"MOCHILA BOTAFOGO CASUAL 27","sku":"0239547458001","price":124.95,"qty":0,"unit":"UND","img":"imagens/imagem_29.jpg"},
+    {"name":"MOCHILA FLAMENGO 27J","sku":"0239536458001","price":124.95,"qty":0,"unit":"UND","img":"imagens/imagem_30.jpg"},
+    {"name":"MOCHILA FLAMENGO CASUAL 27","sku":"0239541458001","price":124.95,"qty":0,"unit":"UND","img":"imagens/imagem_31.jpg"},
+    {"name":"MOCHILA FLUMINENSE CASUAL 27","sku":"0239549626001","price":124.95,"qty":0,"unit":"UND","img":"imagens/imagem_32.jpg"}
+].map((p,i)=>({...p,id:i,active:true}));
+
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); const discounted=p=>Math.round(p.price*.85*100)/100;
+function render(){const g=document.getElementById('grid');g.innerHTML='';products.filter(p=>p.active).forEach(p=>{let d=discounted(p);let el=document.createElement('article');el.className='card';el.innerHTML=`<button class="remove" title="Excluir item" onclick="removeItem(${p.id})">×</button><div class="photo"><img src="${p.img}" alt="${p.name}"></div><div class="info"><div class="sku">SKU ${p.sku}</div><div class="name">${p.name}</div><div class="prices"><div><div class="label">Valor original</div><div class="original">${brl(p.price)}</div></div><div style="text-align:right"><div class="label">Valor com desconto de setembro <span class="off">-15%</span></div><div class="bagprice">${brl(d)}</div></div></div><div class="controls"><div><div class="label">Quantidade</div><div class="qtybox"><button onclick="changeQty(${p.id},-1)">−</button><input type="number" min="0" value="${p.qty}" onchange="setQty(${p.id},this.value)"><button onclick="changeQty(${p.id},1)">+</button></div></div><div class="subtotal"><div class="label">Subtotal</div><b>${brl(d*p.qty)}</b></div></div></div>`;g.appendChild(el)}); if(!products.some(p=>p.active))g.innerHTML='<div class="empty">Todos os itens foram excluídos.</div>'; totals()}
+
+
+function changeQty(id,n){let p=products[id];p.qty=Math.max(0,p.qty+n);render()}
+
+function setQty(id,v){products[id].qty=Math.max(0,parseInt(v)||0);render()}
+
+function removeItem(id){products[id].active=false;render()}
+
+
+function totals(){let a=products.filter(p=>p.active&&p.qty>0);let total=a.reduce((s,p)=>s+discounted(p)*p.qty,0);document.getElementById('items').textContent=a.length;document.getElementById('topTotal').textContent=brl(total);document.getElementById('grand').textContent=brl(total)}
+
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+
+function downloadExcel(){let a=products.filter(p=>p.active&&p.qty>0);if(!a.length){alert('Selecione ao menos um item.');return;} let rows=a.map(p=>`<Row><Cell><Data ss:Type="String">${esc(p.sku)}</Data></Cell><Cell><Data ss:Type="Number">${p.qty}</Data></Cell></Row>`).join('');let xml=`<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Pedido"><Table><Row><Cell><Data ss:Type="String">SKU</Data></Cell><Cell><Data ss:Type="String">QTD</Data></Cell></Row>${rows}</Table></Worksheet></Workbook>`;let blob=new Blob([xml],{type:'application/vnd.ms-excel'});let u=URL.createObjectURL(blob);let x=document.createElement('a');x.href=u;x.download='PEDIDO_BAGAGGIO.xls';document.body.appendChild(x);x.click();x.remove();URL.revokeObjectURL(u)}render();
+    </script>
+</body>
+</html>
